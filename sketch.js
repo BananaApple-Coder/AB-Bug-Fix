@@ -53,7 +53,7 @@ function draw(){
         noStroke();
         textSize(35)
         fill("white")
-        text("Score  " + score, width-300, 50)
+        text("Score:  " + score, width-300, 50)
     
     Engine.update(engine);
     //strokeWeight(4);
@@ -81,20 +81,24 @@ function draw(){
 }
 
 function mouseDragged(){
-    //if (gameState!=="launched"){
+    if (gameState!=="launched"){
         Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
-    //}
+    }
 }
 
 
 function mouseReleased(){
     slingshot.fly();
     gameState = "launched";
+    bird.trajectory = []
 }
 
 function keyPressed(){
     if(keyCode === 32){
-       slingshot.attach(bird.body);
+        gameState = "onSling"
+        Matter.Body.setPosition(bird.body, {x:200, y:50})
+        bird.stop()
+        slingshot.attach(bird.body);
     }
 }
 
